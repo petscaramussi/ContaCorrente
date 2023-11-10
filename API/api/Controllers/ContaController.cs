@@ -1,3 +1,4 @@
+using api.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -34,10 +35,18 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Conta>>> CreateLancamentoByUser(Conta conta)
+        public async Task<ActionResult<List<Conta>>> CreateLancamentoByUser(ContaUserDto contadto)
         {
+            var contaDto = new Conta{
+                Id = contadto.Id,
+                Descricao = contadto.Descricao,
+                Data = DateTime.Now,
+                Valor = contadto.Valor,
+                Avulso = Avulso.Avulso,
+                Status = contadto.Status
+            };
 
-            _context.Contas.Add(conta);
+            _context.Contas.Add(contaDto);
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Contas.ToListAsync());
@@ -45,13 +54,13 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("api/Conta/nAvulso")]
-        public async Task<ActionResult<List<Conta>>> CreateLancamentoByAPI(Conta conta)
+        public async Task<ActionResult<List<Conta>>> CreateLancamentoByAPI(ContaApiDto contadto)
         {
             var contaDto = new Conta{
-                Id = conta.Id,
-                Descricao = conta.Descricao,
-                Data = conta.Data,
-                Valor = conta.Valor,
+                Id = contadto.Id,
+                Descricao = contadto.Descricao,
+                Data = contadto.Data,
+                Valor = contadto.Valor,
                 Avulso = Avulso.NãoAvulso,
                 Status = Status.Válido
             };
