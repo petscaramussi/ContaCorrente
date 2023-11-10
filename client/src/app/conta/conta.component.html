@@ -1,0 +1,29 @@
+<div class="centered-content">
+    <div class="task-manager-container">
+        <div class="task-list-container has-background-light">
+            <h1 class="title has-text-primary">
+                Conta Corrente
+            </h1>
+            <div class="conta-container">
+                <div class="task columns is-multiline" *ngFor="let lancamentos of contas">
+                    <div class="container-text">
+                    <p>{{ lancamentos.descricao }} - {{ lancamentos.data | date}}</p>
+                    <p>{{ lancamentos.valor | currency : 'BRL'}}</p>
+                    </div>
+                    <div class="buttons last-child">
+                    <button class="button is-warning">
+                        <!-- <img src="../../../assets/plus-icon.svg"> -->
+                    </button>
+                    <button class="button is-danger">
+                        <!-- <img src="../../../assets/plus-icon.svg"> -->
+                    </button>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br>
+            <button style="background-color: black;" class="circle-add-button button is-primary">
+                <!-- <img src="../../../assets/plus-icon.svg"> -->
+            </button>
+        </div>
+    </div>
+</div>

@@ -18,7 +18,16 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 
 builder.Services.AddScoped<IContaRepository, ContaRepository>();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+app.UseCors(options =>
+  options.WithOrigins("http://localhost:4200")
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
