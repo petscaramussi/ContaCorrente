@@ -1,8 +1,8 @@
-export interface Conta {
-    id: number;
-    descricao: string;
-    data: string;
-    valor: number;
-    avulso: number;
-    status: number;
+export class Conta {
+    id: number = 0;
+    descricao: string = '';
+    data: string = '';
+    valor: number | undefined = undefined;
+    avulso: number = 0;
+    status: number = 0;
 }

@@ -38,12 +38,11 @@ namespace api.Controllers
         public async Task<ActionResult<List<Conta>>> CreateLancamentoByUser(ContaUserDto contadto)
         {
             var contaDto = new Conta{
-                Id = contadto.Id,
                 Descricao = contadto.Descricao,
                 Data = DateTime.Now,
                 Valor = contadto.Valor,
                 Avulso = Avulso.Avulso,
-                Status = contadto.Status
+                Status = Status.Válido
             };
 
             _context.Contas.Add(contaDto);
@@ -69,6 +68,22 @@ namespace api.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(await _context.Contas.ToListAsync());
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<List<Conta>>> UpdateSuperHero(ContaToEditDto conta)
+        {
+            var dbConta = await _context.Contas.FindAsync(conta.Id);
+            if (dbConta == null)
+                return BadRequest("Lancamento not found.");
+
+            dbConta.Valor = conta.Valor;
+            dbConta.Data = conta.Data;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Contas.ToListAsync());
+
         }
     }
 }

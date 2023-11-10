@@ -12,7 +12,10 @@ export class ContaService {
   constructor(private http: HttpClient) { }
 
   getLancamentos() {
-    return this.http.get<Conta[]>(this.baseUrl);
-    
+    return this.http.get<Conta[]>(this.baseUrl); 
+  }
+
+  createNewLancamento(conta: Conta) {
+    return this.http.post<Conta[]>(this.baseUrl, conta);
   }
 }
