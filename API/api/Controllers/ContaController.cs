@@ -39,7 +39,7 @@ namespace api.Controllers
         {
             var contaDto = new Conta{
                 Descricao = contadto.Descricao,
-                Data = DateTime.Now,
+                Data = DateTime.Now.Date,
                 Valor = contadto.Valor,
                 Avulso = Avulso.Avulso,
                 Status = Status.Válido
@@ -71,9 +71,10 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Conta>>> UpdateSuperHero(ContaToEditDto conta)
+        public async Task<ActionResult<List<Conta>>> UpdateContaLancamento(ContaToEditDto conta)
         {
             var dbConta = await _context.Contas.FindAsync(conta.Id);
+            //_context.Contas.Where(a => a.Data >= DateTime.Now.AddDays(2))
             if (dbConta == null)
                 return BadRequest("Lancamento not found.");
 
@@ -85,5 +86,7 @@ namespace api.Controllers
             return Ok(await _context.Contas.ToListAsync());
 
         }
+
+
     }
 }

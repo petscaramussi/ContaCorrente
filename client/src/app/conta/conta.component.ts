@@ -10,6 +10,14 @@ import { ContaService } from '../conta.service';
 export class ContaComponent {
   title = 'client';
   contas: Conta[] = [];
+  enumAvulso: string[] = [
+    "NãoAvulso",
+    "Avulso"
+  ]
+  enumStatus: string[] = [
+    "Válido",
+    "Cancelado"
+  ]
 
   constructor(private contaService: ContaService) {
 

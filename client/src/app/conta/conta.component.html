@@ -7,11 +7,11 @@
             <div class="conta-container">
                 <div class="task columns is-multiline" *ngFor="let lancamentos of contas">
                     <div class="container-text">
-                    <p>{{ lancamentos.descricao }} - {{ lancamentos.data | date}}</p>
+                    <p>{{ lancamentos.descricao }} - {{ lancamentos.data | date }} - <span class="text-especial">{{enumAvulso[lancamentos.avulso]}} | </span> <span class="text-especial" [ngClass]="{'valido': lancamentos.status == 0, 'cancelado': lancamentos.status == 1}">{{enumStatus[lancamentos.status]}}</span></p>
                     <p>{{ lancamentos.valor | currency : 'BRL'}}</p>
                     </div>
                     <div class="buttons last-child">
-                    <button class="button is-warning">
+                    <button routerLink="/edit-lanc/{{lancamentos.id}}" class="button is-warning">
                         <img src="../../assets/edit.svg">
                     </button>
                     <button  class="button is-danger">

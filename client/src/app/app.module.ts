@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { ContaComponent } from './conta/conta.component';
 import { NewLancComponent } from './new-lanc/new-lanc.component';
 import { FormsModule } from '@angular/forms';
+import { EditLancComponent } from './edit-lanc/edit-lanc.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContaComponent,
-    NewLancComponent
+    NewLancComponent,
+    EditLancComponent
   ],
   imports: [
     BrowserModule,
