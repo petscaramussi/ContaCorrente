@@ -1,4 +1,6 @@
-using Core.Interfaces;
+using Core.Interfaces.Repository;
+using Core.Interfaces.Service;
+using Core.Services;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 });
 
 builder.Services.AddScoped<IContaRepository, ContaRepository>();
+builder.Services.AddScoped<IContaService, ContaService>();
 
 builder.Services.AddCors();
 

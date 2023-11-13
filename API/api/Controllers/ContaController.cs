@@ -1,9 +1,8 @@
-using api.DTOs;
+using Core.Entities.DTOs;
 using Core.Entities;
-using Core.Interfaces;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Core.Interfaces.Service;
+using Core.Interfaces.Repository;
 
 namespace api.Controllers
 {
@@ -11,110 +10,70 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class ContaController : ControllerBase
     {
+        private readonly IContaService _contaService;
         private readonly IContaRepository _repo;
-        private readonly StoreContext _context;
-        public ContaController(IContaRepository repo, StoreContext context)
+        public ContaController(IContaService contaService, IContaRepository contaRepo)
         {
-            _repo = repo;
-            _context = context;
+            _contaService = contaService;
+            
         }
-
 
         [HttpGet]
         public async Task<ActionResult<List<Conta>>> GetLancamentos()
         {
-            var lancamentos = await _repo.GetLancamentos();
-
+            var lancamentos = await _contaService.GetLancamentos();
             return Ok(lancamentos);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Conta>> GetLancamentoById(int id)
         {
-            return await _repo.GetlancamentoById(id);
+            var lancamento =  await _contaService.GetlancamentoById(id);
+            return Ok(lancamento);
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Conta>>> CreateLancamentoByUser(ContaUserDto contadto)
+        public async Task<IActionResult> CreateLancamentoByUser(ContaUserDto contadto)
         {
-            var contaDto = new Conta{
-                Descricao = contadto.Descricao,
-                Data = DateTime.Now.Date,
-                Valor = contadto.Valor,
-                Avulso = Avulso.Avulso,
-                Status = Status.Válido
-            };
-
-            _context.Contas.Add(contaDto);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Contas.ToListAsync());
+            await _contaService.CreateLancamentoByUser(contadto);
+            var contas = _contaService.GetAll();
+            return Ok(contas);
         }
 
         [HttpPost]
         [Route("api/Conta/nAvulso")]
-        public async Task<ActionResult<List<Conta>>> CreateLancamentoByAPI(ContaApiDto contadto)
+        public async Task<IActionResult> CreateLancamentoByAPI(ContaApiDto contadto)
         {
-            var contaDto = new Conta{
-                Id = contadto.Id,
-                Descricao = contadto.Descricao,
-                Data = contadto.Data,
-                Valor = contadto.Valor,
-                Avulso = Avulso.NãoAvulso,
-                Status = Status.Válido
-            };
-            
-            _context.Contas.Add(contaDto);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Contas.ToListAsync());
+            await _contaService.CreateLancamentoByApi(contadto);
+            var contas = _contaService.GetAll();
+            return Ok(contas);
         }
 
         [HttpPut("Cancel/{id}")]
         public async Task<ActionResult<List<Conta>>> CancelLancamento(int id)
         {
-            var dbConta = await _context.Contas.FindAsync(id);
-            if ( dbConta.Avulso == Avulso.NãoAvulso) 
-            {
-                return BadRequest("Edit is not Allowed.");
-            }
-
-            dbConta.Status = Status.Cancelado;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Contas.ToListAsync());
+            var contas = await _contaService.CancelLancamento(id);
+            return Ok(contas);
         }
 
+        // REFATORAR
         [HttpPut]
         public async Task<ActionResult<List<Conta>>> UpdateContaLancamento(ContaToEditDto conta)
-        {
-            
-            var dbConta = await _context.Contas.FindAsync(conta.Id);
+        {   
 
-            if (dbConta == null)
-                return BadRequest("Lancamento not found.");
-
-            if (dbConta.Avulso == Avulso.NãoAvulso)
-                return BadRequest("Edit is not Allowed.");
-
-            dbConta.Valor = conta.Valor;
-            dbConta.Data = conta.Data;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Contas.ToListAsync());
-
+            var lancamento = await _contaService.AtualizaLancamento(conta);
+            return Ok(lancamento);
         }
 
         [HttpGet("Filter/{days}")]
-        public async Task<ActionResult<List<Conta>>> GetLancamentosFiltered(int days)
+        public async Task<IActionResult> GetLancamentosFiltered(int days)
         {
-            var lancamentos = await _repo.GetLancamentosFiltered(days);
-
+            var lancamentos = await _contaService.GetLancamentosFiltered(days);
             return Ok(lancamentos);
         }
 
-
+        [HttpGet("Existe/{id}")]
+        public async Task<IActionResult> ContaExiste(int id) 
+            => Ok(await _contaService.ContaExiste(id));
     }
 }

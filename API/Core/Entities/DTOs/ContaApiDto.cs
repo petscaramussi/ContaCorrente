@@ -1,4 +1,4 @@
-namespace api.DTOs
+namespace Core.Entities.DTOs
 {
     public class ContaApiDto
     {

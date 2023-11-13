@@ -71,7 +71,7 @@ export class ContaComponent {
     this.contaService.defineStatusLancamentoCancelado(id).subscribe({
       next: response => console.log(response),
       complete: () => {
-        this.getLancamentosLastTwoDays();
+        this.getAllLancamentos();
       }
     })
   }

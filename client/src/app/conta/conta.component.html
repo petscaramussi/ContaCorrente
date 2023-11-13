@@ -1,6 +1,6 @@
 <div class="centered-content">
-    <div class="task-manager-container">
-        <div class="task-list-container has-background-light">
+    <div class="conta-manager-container">
+        <div class="conta-list-container has-background-light">
             <div class="columns">
                 <h1 class="title has-text-primary column is-pulled-left">
                     Conta Corrente
@@ -17,7 +17,7 @@
             </div>        
 
             <div class="conta-container">
-                <div class="task columns is-multiline" *ngFor="let lancamentos of contas">
+                <div class="conta columns is-multiline" *ngFor="let lancamentos of contas">
                     <div class="container-text">
                     <p>{{ lancamentos.descricao }} - {{ lancamentos.data | date }} - <span class="text-especial">{{enumAvulso[lancamentos.avulso]}} | </span> <span class="text-especial" [ngClass]="{'valido': lancamentos.status == 0, 'cancelado': lancamentos.status == 1}">{{enumStatus[lancamentos.status]}}</span></p>
                     <p>{{ lancamentos.valor | currency : 'BRL'}}</p>
