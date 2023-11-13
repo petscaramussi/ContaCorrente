@@ -6,5 +6,6 @@ namespace Core.Interfaces
     {
         Task<Conta> GetlancamentoById(int id);
         Task<IReadOnlyList<Conta>> GetLancamentos();
+        Task<IReadOnlyList<Conta>> GetLancamentosFiltered(int days);
     }
 }

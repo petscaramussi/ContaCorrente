@@ -22,5 +22,10 @@ namespace Infrastructure.Data
         {
             return await _context.Contas.ToListAsync();
         }
+
+        public async Task<IReadOnlyList<Conta>> GetLancamentosFiltered(int days)
+        {   
+            return await _context.Contas.Where(a => a.Data >= DateTime.Now.AddDays(days * -1) && a.Data <= DateTime.Now).ToListAsync();
+        }
     }
 }

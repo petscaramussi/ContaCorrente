@@ -5,11 +5,11 @@
             Edite o seu lançamento
         </h1>
         <form (ngSubmit)="onSubimit()">
-        <label class="label">Descrição</label>
-        <input id="data" [(ngModel)]="conta.data" class="input has-background-light" type="text" placeholder="Enter task name..." [ngModelOptions]="{standalone: true}">
+        <label class="label">Data</label>
+        <input id="data" [(ngModel)]="conta.data" class="input has-background-light" type="text" placeholder="Insira uma data..." [ngModelOptions]="{standalone: true}">
         <br><br>
         <label class="label">Valor</label>
-        <input id="valor" [(ngModel)]="conta.valor" class="input has-background-light" type="text" placeholder="Enter task name..." [ngModelOptions]="{standalone: true}">
+        <input id="valor" [(ngModel)]="conta.valor" class="input has-background-light" type="text" placeholder="Insira um valor..." [ngModelOptions]="{standalone: true}">
         <br><br>
         <div class="buttons is-right">
             <button class="button" routerLink="/">Cancel</button>

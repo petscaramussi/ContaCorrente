@@ -12,8 +12,16 @@ export class ContaService {
 
   constructor(private http: HttpClient) { }
 
-  getLancamentos() {
+  getAllLancamentos() {
     return this.http.get<Conta[]>(this.baseUrl); 
+  }
+
+  getLancamentosLastTwoDays() {
+    return this.http.get<Conta[]>(`${this.baseUrl}/Filter/2`); 
+  }
+
+  getLancamentosLastThirtyDays() {
+    return this.http.get<Conta[]>(`${this.baseUrl}/Filter/30`);
   }
 
   createNewLancamento(conta: Conta) {
@@ -26,6 +34,10 @@ export class ContaService {
 
   updateLancamento(conta: Conta) {
     return this.http.put<Conta[]>(this.baseUrl, conta);
+  }
+
+  defineStatusLancamentoCancelado(id: number) {
+    return this.http.put(`${this.baseUrl}/Cancel/${id}`, {});
   }
 
 }

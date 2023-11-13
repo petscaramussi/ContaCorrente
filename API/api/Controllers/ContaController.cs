@@ -70,13 +70,33 @@ namespace api.Controllers
             return Ok(await _context.Contas.ToListAsync());
         }
 
+        [HttpPut("Cancel/{id}")]
+        public async Task<ActionResult<List<Conta>>> CancelLancamento(int id)
+        {
+            var dbConta = await _context.Contas.FindAsync(id);
+            if ( dbConta.Avulso == Avulso.NãoAvulso) 
+            {
+                return BadRequest("Edit is not Allowed.");
+            }
+
+            dbConta.Status = Status.Cancelado;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Contas.ToListAsync());
+        }
+
         [HttpPut]
         public async Task<ActionResult<List<Conta>>> UpdateContaLancamento(ContaToEditDto conta)
         {
+            
             var dbConta = await _context.Contas.FindAsync(conta.Id);
-            //_context.Contas.Where(a => a.Data >= DateTime.Now.AddDays(2))
+
             if (dbConta == null)
                 return BadRequest("Lancamento not found.");
+
+            if (dbConta.Avulso == Avulso.NãoAvulso)
+                return BadRequest("Edit is not Allowed.");
 
             dbConta.Valor = conta.Valor;
             dbConta.Data = conta.Data;
@@ -85,6 +105,14 @@ namespace api.Controllers
 
             return Ok(await _context.Contas.ToListAsync());
 
+        }
+
+        [HttpGet("Filter/{days}")]
+        public async Task<ActionResult<List<Conta>>> GetLancamentosFiltered(int days)
+        {
+            var lancamentos = await _repo.GetLancamentosFiltered(days);
+
+            return Ok(lancamentos);
         }
 
 
