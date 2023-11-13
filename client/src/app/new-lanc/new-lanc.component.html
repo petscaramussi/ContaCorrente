@@ -6,10 +6,10 @@
         </h1>
         <form (ngSubmit)="onSubimit()">
         <label class="label">Descrição</label>
-        <input id="descricao" [(ngModel)]="conta.descricao" class="input has-background-light" type="text" placeholder="Enter task name..." [ngModelOptions]="{standalone: true}">
+        <input id="descricao" [(ngModel)]="conta.descricao" class="input has-background-light" type="text" placeholder="Entre com uma descrição..." [ngModelOptions]="{standalone: true}">
         <br><br>
         <label class="label">Valor</label>
-        <input id="valor" [(ngModel)]="conta.valor" class="input has-background-light" type="text" placeholder="Enter task name..." [ngModelOptions]="{standalone: true}">
+        <input id="valor" [(ngModel)]="conta.valor" class="input has-background-light" type="text" placeholder="Entre com um valor, apenas numeros (00.00)..." [ngModelOptions]="{standalone: true}">
         <br><br>
         <div class="buttons is-right">
             <button class="button" routerLink="/">Cancelar</button>
