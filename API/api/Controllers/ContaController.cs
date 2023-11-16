@@ -41,7 +41,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        [Route("api/Conta/nAvulso")]
+        [Route("Insert/nAvulso")]
         public async Task<IActionResult> CreateLancamentoByAPI(ContaApiDto contadto)
         {
             await _contaService.CreateLancamentoByApi(contadto);
