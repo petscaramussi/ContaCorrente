@@ -1,5 +1,5 @@
 # ContaCorrente
-Desafio para a vaga Full Stack
+Simulador de uma conta corrente 
 
 ## Instalação
 Angular 
